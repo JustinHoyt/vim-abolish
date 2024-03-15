@@ -161,6 +161,11 @@ function! s:create_dictionary(lhs,rhs,opts)
       let dictionary[s:mixedcase(lhs)] = s:mixedcase(rhs)
       let dictionary[tolower(lhs)] = tolower(rhs)
       let dictionary[toupper(lhs)] = toupper(rhs)
+      let dictionary[s:snakecase(lhs)] = s:snakecase(rhs)
+      let dictionary[s:uppercase(lhs)] = s:uppercase(rhs)
+      let dictionary[s:dashcase(lhs)] = s:dashcase(rhs)
+      let dictionary[s:dotcase(lhs)] = s:dotcase(rhs)
+      let dictionary[s:spacecase(lhs)] = s:spacecase(rhs)
     endif
     let dictionary[lhs] = rhs
   endfor
