@@ -142,6 +142,16 @@ function! s:dotcase(word)
   return substitute(s:snakecase(a:word),'_','.','g')
 endfunction
 
+function! s:titlecase(word)
+  let spaced = s:spacecase(a:word)
+  return substitute(spaced, '\<\(\w\)', '\u\1', 'g')
+endfunction
+
+function! s:capitalcase(word)
+  let spaced = s:spacecase(a:word)
+  return substitute(spaced, '^\(\w\)', '\u\1', '')
+endfunction
+
 call extend(Abolish, {
       \ 'camelcase':  s:function('s:camelcase'),
       \ 'mixedcase':  s:function('s:mixedcase'),
@@ -150,6 +160,8 @@ call extend(Abolish, {
       \ 'dashcase':   s:function('s:dashcase'),
       \ 'dotcase':    s:function('s:dotcase'),
       \ 'spacecase':  s:function('s:spacecase'),
+      \ 'titlecase':  s:function('s:titlecase'),
+      \ 'capitalcase':  s:function('s:capitalcase'),
       \ }, 'keep')
 
 function! s:create_dictionary(lhs,rhs,opts)
@@ -166,6 +178,8 @@ function! s:create_dictionary(lhs,rhs,opts)
       let dictionary[s:dashcase(lhs)] = s:dashcase(rhs)
       let dictionary[s:dotcase(lhs)] = s:dotcase(rhs)
       let dictionary[s:spacecase(lhs)] = s:spacecase(rhs)
+      let dictionary[s:titlecase(lhs)] = s:titlecase(rhs)
+      let dictionary[s:capitalcase(lhs)] = s:capitalcase(rhs)
     endif
     let dictionary[lhs] = rhs
   endfor
@@ -574,6 +588,8 @@ call extend(Abolish.Coercions, {
       \ 'k': Abolish.dashcase,
       \ '.': Abolish.dotcase,
       \ ' ': Abolish.spacecase,
+      \ 't': Abolish.titlecase,
+      \ 'a': Abolish.capitalcase,
       \ "function missing": s:function("s:unknown_coercion")
       \}, "keep")
 
